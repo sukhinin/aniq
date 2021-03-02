@@ -8,22 +8,24 @@
 <body>
 <div class="h-screen flex justify-center items-center px-32">
   <div class="flex bg-gray-100 rounded-xl overflow-hidden shadow-md max-w-4xl">
-    <img id="img" src="placeholder.png" alt="image" class="w-48 h-auto object-cover rounded-none">
+    <img id="img" alt="image"
+         src="https://www.less-real.com/imagevault/uploaded/imagessolidthumbnails/part1/1925.jpg"
+         class="w-48 h-auto object-cover rounded-none">
     <div class="p-8 space-y-4">
       <blockquote>
         <p id="quote" class="text-lg font-semibold">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
+          When something is gained, something is lost. It's difficult to live after something like that. What is lost
+          will never return. Important things, irreplaceable things. But what is needed to keep those things is in the
+          firm will, packed into one bullet. Man knows... he knows that nothing will begin unless he speaks, and that
+          nothing will change unless he moves.
         </p>
       </blockquote>
       <div class="font-medium">
         <div id="character" class="text-purple-600">
-          Sed ut perspiciatis
+          Vash the Stampede
         </div>
         <div id="title" class="text-gray-500">
-          Quis autem
+          Trigun
         </div>
       </div>
     </div>
@@ -31,19 +33,16 @@
 </div>
 
 <script>
+  fetch("quotes.json")
+    .then(response => response.json())
+    .then(quotes => setInterval(() => update(quotes), 5000));
+
   const title = document.getElementById('title');
   const character = document.getElementById('character');
   const quote = document.getElementById('quote');
   const img = document.getElementById('img');
 
-  let quotes;
-
-  async function update() {
-    if (!quotes) {
-      const response = await fetch("quotes.json");
-      quotes = await response.json();
-    }
-
+  function update(quotes) {
     const index = Math.floor((Math.random() * quotes.length));
     const entry = quotes[index];
 
@@ -52,9 +51,6 @@
     quote.textContent = entry.quote;
     img.src = entry.img;
   }
-
-  update();
-  setInterval(update, 5000);
 </script>
 </body>
 </html>
