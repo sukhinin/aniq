@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="h-screen flex justify-center items-center px-32">
-  <div class="flex bg-gray-100 rounded-xl overflow-hidden shadow-md max-w-4xl">
+  <div id="card" class="flex bg-gray-100 rounded-xl overflow-hidden shadow-md max-w-4xl transition-all delay-100">
     <img id="img" alt="image"
          src="https://www.less-real.com/imagevault/uploaded/imagessolidthumbnails/part1/1925.jpg"
          class="w-48 h-auto object-cover rounded-none">
@@ -37,12 +37,20 @@
     .then(response => response.json())
     .then(quotes => setInterval(() => update(quotes), 5000));
 
+  const card = document.getElementById('card');
   const title = document.getElementById('title');
   const character = document.getElementById('character');
   const quote = document.getElementById('quote');
   const img = document.getElementById('img');
 
-  function update(quotes) {
+  async function delay(ms) {
+    await new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function update(quotes) {
+    card.classList.add('reload');
+    await delay(500);
+
     const index = Math.floor((Math.random() * quotes.length));
     const entry = quotes[index];
 
@@ -50,7 +58,16 @@
     character.textContent = entry.character;
     quote.textContent = entry.quote;
     img.src = entry.img;
+
+    card.classList.remove('reload');
   }
 </script>
 </body>
+
+<style>
+  .reload {
+      transform: translateY(25px);
+      opacity: 0;
+  }
+</style>
 </html>
